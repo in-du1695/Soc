@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unique Developer Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #0f1724;
+      --text: #e6f0ff;
+      --muted: #a9b6d5;
+      --brand: #3ee98a; /* vibrant green */
+      --brand-2: #8fe9ff;
+      --ring: rgba(62, 233, 138, 0.35);
+      --shadow: 0 20px 40px rgba(0,0,0,.35);
+      --radius: 20px;
+    }
+    
+    /* Light theme variables */
+    .light {
+      --bg: #f5fbff;
+      --card: #ffffff;
+      --text: #0b1220;
+      --muted: #4b5565;
+      --ring: rgba(62, 233, 138, 0.25);
+      --shadow: 0 10px 30px rgba(15, 23, 36, .1);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 1200px at 80% -10%, rgba(62,233,138,.08), transparent 50%),
+                  radial-gradient(700px 700px at 0% 10%, rgba(143,233,255,.08), transparent 60%),
+                  var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* --- Fancy animated blob background --- */
+    .blob {
+      position: fixed; inset: auto -10vw -10vh auto; width: 55vmin; aspect-ratio: 1;
+      background: radial-gradient(circle at 30% 30%, var(--brand), transparent 60%),
+                  radial-gradient(circle at 70% 70%, var(--brand-2), transparent 55%);
+      filter: blur(40px) saturate(140%);
+      opacity: .25; z-index: -1; border-radius: 50%;
+      animation: float 16s ease-in-out infinite;
+    }
+    .blob:nth-child(2){ left: -10vw; top: 10vh; width: 70vmin; opacity:.18; animation-duration: 22s; }
+    @keyframes float { 0%{ transform: translateY(0) rotate(0deg);} 50%{ transform: translateY(-30px) rotate(20deg);} 100%{ transform: translateY(0) rotate(0deg);} }
+
+    /* --- Header / Nav --- */
+    header {
+      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px);
+      background: color-mix(in oklab, var(--bg), transparent 60%);
+      border-bottom: 1px solid color-mix(in oklab, var(--text), transparent 92%);
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; gap: 12px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.5px; }
+    .logo {
+      width: 38px; height: 38px; border-radius: 12px; display:grid; place-items:center; font-family: "JetBrains Mono", monospace;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color:#0b0f14; box-shadow: var(--shadow);
+    }
+    .navlinks { display:flex; gap: 20px; align-items:center; }
+    .navlinks a { color: var(--muted); text-decoration:none; font-weight:500; padding: 10px 12px; border-radius: 12px; }
+    .navlinks a:hover { color: var(--text); background: color-mix(in oklab, var(--card), transparent 40%); }
+    .cta {
+      padding: 10px 14px; border-radius: 14px; font-weight: 600; text-decoration: none;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2)); color:#081018; box-shadow: var(--shadow);
+      border: 1px solid color-mix(in oklab, var(--brand), #fff 10%);
+    }
+    .menu { display:none; }
+
+    /* --- Hero --- */
+    .hero { padding: 72px 0 40px; display:grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items:center; }
+    .eyebrow { display:inline-flex; gap:8px; align-items:center; font-size:12px; padding:6px 10px; border-radius: 999px; color: #081018; background: linear-gradient(90deg, var(--brand), var(--brand-2)); font-weight:700; letter-spacing:.7px; text-transform:uppercase; }
+    .title { font-size: clamp(36px, 4.5vw, 64px); line-height: 1.05; margin: 14px 0 10px; font-weight:800; }
+    .gradient-text { background: linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .subtitle { color: var(--muted); font-size: clamp(14px, 1.8vw, 18px); max-width: 60ch; }
+    .hero-cta { display:flex; gap:12px; margin-top: 22px; }
+    .btn {
+      display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius: 14px; font-weight:600; text-decoration:none; border:1px solid color-mix(in oklab, var(--text), transparent 80%);
+      background: color-mix(in oklab, var(--card), transparent 20%); color: var(--text);
+    }
+    .btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow);} 
+    .btn.primary{ background: linear-gradient(135deg, var(--brand), var(--brand-2)); color:#081018; border-color: color-mix(in oklab, var(--brand), #fff 10%);} 
+
+    .hero-card {
+      position:relative; border-radius: var(--radius); padding: 18px; background: color-mix(in oklab, var(--card), transparent 8%);
+      outline: 1px solid color-mix(in oklab, var(--text), transparent 90%);
+      box-shadow: var(--shadow);
+    }
+    .hero-card .glass {
+      border-radius: calc(var(--radius) - 8px); padding: 28px; background: linear-gradient(135deg, color-mix(in oklab, var(--card), white 2%), color-mix(in oklab, var(--card), transparent 35%));
+      border: 1px solid color-mix(in oklab, var(--text), transparent 88%);
+    }
+    .stats { display:grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top:18px; }
+    .stat { background: color-mix(in oklab, var(--card), transparent 10%); padding: 14px; border-radius:16px; border:1px solid color-mix(in oklab, var(--text), transparent 90%); text-align:center; }
+    .stat strong { display:block; font-size: 22px; }
+
+    /* --- Marquee --- */
+    .marquee {
+      overflow: hidden; white-space: nowrap; border-top: 1px dashed color-mix(in oklab, var(--text), transparent 85%);
+      border-bottom: 1px dashed color-mix(in oklab, var(--text), transparent 85%); padding: 12px 0; margin: 10px 0 0;
+    }
+    .marquee-track { display:inline-block; animation: scroll 22s linear infinite; }
+    .marquee b { margin: 0 22px; color: var(--muted); }
+    @keyframes scroll { from { transform: translateX(0);} to { transform: translateX(-50%);} }
+
+    /* --- Section base --- */
+    section { padding: 70px 0; }
+    .section-title { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom: 24px; }
+    .section-title h2 { font-size: clamp(20px, 2.8vw, 34px); margin:0; }
+    .section-title p { color: var(--muted); margin:0; }
+
+    /* --- Projects Grid --- */
+    .grid { display:grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .card {
+      background: color-mix(in oklab, var(--card), transparent 10%); border:1px solid color-mix(in oklab, var(--text), transparent 90%);
+      border-radius: 18px; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease; position:relative;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .thumb { aspect-ratio: 16/10; width:100%; background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%); display:grid; place-items:center; font-family:"JetBrains Mono", monospace; font-weight:700; color:#081018; }
+    .content { padding: 16px; }
+    .tags { display:flex; flex-wrap:wrap; gap: 6px; margin-top: 10px; }
+    .tag { font-size: 12px; padding: 6px 10px; border-radius: 999px; border:1px solid color-mix(in oklab, var(--text), transparent 85%); color: var(--muted); }
+
+    /* --- About / Timeline --- */
+    .about { display:grid; grid-template-columns: 1.1fr .9fr; gap: 22px; }
+    .prose { background: color-mix(in oklab, var(--card), transparent 10%); border: 1px solid color-mix(in oklab, var(--text), transparent 90%); border-radius: 18px; padding: 20px; }
+    .timeline { position:relative; padding-left: 24px; }
+    .timeline::before { content:""; position:absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(var(--brand), transparent); border-radius:2px; }
+    .titem { position:relative; margin-bottom: 18px; }
+    .titem::before { content:""; position:absolute; left: -2px; top: 4px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, var(--brand), var(--brand-2)); box-shadow: 0 0 0 4px var(--ring); }
+    .titem h4 { margin: 0 0 6px; }
+    .titem p { margin: 0; color: var(--muted); }
+
+    /* --- Skills Pills --- */
+    .skills { display:flex; flex-wrap: wrap; gap: 10px; }
+    .pill { border-radius: 999px; padding: 10px 14px; border:1px dashed color-mix(in oklab, var(--text), transparent 80%); background: color-mix(in oklab, var(--card), transparent 8%); }
+
+    /* --- Contact --- */
+    form { display:grid; gap: 12px; }
+    input, textarea {
+      width:100%; padding: 12px 14px; border-radius: 14px; border: 1px solid color-mix(in oklab, var(--text), transparent 86%);
+      background: color-mix(in oklab, var(--card), transparent 10%); color: var(--text); outline: none;
+    }
+    input:focus, textarea:focus { box-shadow: 0 0 0 6px var(--ring); border-color: var(--brand); }
+
+    /* --- Footer --- */
+    footer { padding: 24px 0 60px; color: var(--muted); text-align:center; border-top: 1px solid color-mix(in oklab, var(--text), transparent 90%); }
+
+    /* --- Utility --- */
+    .hidden { display:none; }
+
+    /* --- Mobile --- */
+    @media (max-width: 980px){
+      .hero { grid-template-columns: 1fr; }
+      .about { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .navlinks { display:none; }
+      .menu { display:block; background: none; border: 1px solid color-mix(in oklab, var(--text), transparent 85%); border-radius: 12px; padding: 8px 12px; color: var(--text); }
+    }
+    @media (max-width: 640px){
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce){
+      .marquee-track { animation: none; }
+      .blob { animation: none; }
+      .card, .btn:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Ambient blobs for unique vibe -->
+  <div class="blob" aria-hidden="true"></div>
+  <div class="blob" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo">IK</div>
+        <span>Indu Kurumutla • Portfolio</span>
+      </div>
+      <nav class="navlinks" aria-label="primary">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <a class="cta" href="#contact">Hire Me</a>
+      </nav>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button id="theme" class="menu" title="Toggle theme">☀️/🌙</button>
+        <button id="hamb" class="menu" aria-expanded="false" aria-controls="mnav">☰</button>
+      </div>
+    </div>
+    <div id="mnav" class="wrap hidden" role="dialog" aria-label="mobile navigation">
+      <nav style="display:grid; gap:8px; padding: 0 0 12px;">
+        <a href="#work" class="btn">Work</a>
+        <a href="#about" class="btn">About</a>
+        <a href="#skills" class="btn">Skills</a>
+        <a href="#contact" class="btn primary">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div>
+        <span class="eyebrow">Open to Opportunities</span>
+        <h1 class="title">Crafting delightful, fast, and <span class="gradient-text">secure</span> web experiences.</h1>
+        <p class="subtitle">Full‑stack developer specializing in React, Node, and blockchain integrations. I build accessible, responsive apps with a focus on performance and clean design.</p>
+        <div class="hero-cta">
+          <a href="#work" class="btn primary">See Projects</a>
+          <a href="#contact" class="btn">Get in Touch →</a>
+        </div>
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee-track">
+            <b>React</b><b>Next.js</b><b>Node</b><b>Express</b><b>MongoDB</b><b>PostgreSQL</b><b>Tailwind</b><b>TypeScript</b><b>Solidity</b><b>n8n</b><b>Docker</b><b>AWS</b>
+            <b>React</b><b>Next.js</b><b>Node</b><b>Express</b><b>MongoDB</b><b>PostgreSQL</b><b>Tailwind</b><b>TypeScript</b><b>Solidity</b><b>n8n</b><b>Docker</b><b>AWS</b>
+          </div>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <div class="glass">
+          <h3 style="margin-top:0;">Currently Building</h3>
+          <p class="subtitle">A privacy‑first mental health assistant using <b>n8n</b> automations and a Solidity‑based consent vault.</p>
+          <div class="stats">
+            <div class="stat"><strong>25+</strong> Projects</div>
+            <div class="stat"><strong>5 yrs</strong> Experience</div>
+            <div class="stat"><strong>98%</strong> Client SAT</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- WORK -->
+    <section id="work">
+      <div class="section-title">
+        <h2>Selected Work</h2>
+        <p>Real projects, measurable results.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="thumb">FinTrack</div>
+          <div class="content">
+            <h3>FinTrack Analytics</h3>
+            <p class="subtitle">A real‑time portfolio dashboard with on‑chain price feeds and alerting.</p>
+            <div class="tags"><span class="tag">Next.js</span><span class="tag">WebSockets</span><span class="tag">Charting</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="thumb">MediCare</div>
+          <div class="content">
+            <h3>MediCare Appointments</h3>
+            <p class="subtitle">Doctor booking with profile, auth, and patient details (name, age, sex, address).</p>
+            <div class="tags"><span class="tag">Tailwind</span><span class="tag">Node</span><span class="tag">MongoDB</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="thumb">n8n Bot</div>
+          <div class="content">
+            <h3>Mental Health Support Bot</h3>
+            <p class="subtitle">CBT journaling assistant with blockchain-backed privacy vault.</p>
+            <div class="tags"><span class="tag">n8n</span><span class="tag">Solidity</span><span class="tag">Supabase</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT / TIMELINE -->
+    <section id="about">
+      <div class="section-title">
+        <h2>About Me</h2>
+        <p>Engineer. Problem solver. Food lover.</p>
+      </div>
+      <div class="about">
+        <div class="prose">
+          <p>Hi! I’m <b>Indu Kurumutla</b>, a developer who blends elegant UI with reliable backend systems. I care about accessibility, performance budgets, and build pipelines that scale.</p>
+          <p>When I’m not coding, I experiment with new recipes and cheer on my brother’s amazing cooking. 🍳</p>
+          <div class="skills" id="skills">
+            <span class="pill">JavaScript / TypeScript</span>
+            <span class="pill">React / Next.js</span>
+            <span class="pill">Node / Express</span>
+            <span class="pill">Postgres / MongoDB</span>
+            <span class="pill">Tailwind / CSS</span>
+            <span class="pill">n8n</span>
+            <span class="pill">Blockchain Basics</span>
+          </div>
+        </div>
+        <div class="timeline">
+          <div class="titem">
+            <h4>2025 — Present · Freelance</h4>
+            <p>Helping startups design and deliver MVPs with delightful UX.</p>
+          </div>
+          <div class="titem">
+            <h4>2023 — 2025 · Full‑stack Dev</h4>
+            <p>Built secure dashboards and appointment systems with modern stacks.</p>
+          </div>
+          <div class="titem">
+            <h4>2021 — 2023 · Frontend Dev</h4>
+            <p>Shipped performant UI components and design systems.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-title">
+        <h2>Let’s Work Together</h2>
+        <p>Tell me about your project.</p>
+      </div>
+      <div class="about">
+        <form id="form">
+          <label>
+            <span>Name</span>
+            <input name="name" placeholder="Your full name" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" placeholder="email@example.com" required />
+          </label>
+          <label>
+            <span>Project details</span>
+            <textarea name="message" rows="5" placeholder="What are we building?" required></textarea>
+          </label>
+          <button class="btn primary" type="submit">Send Message</button>
+          <p id="status" class="subtitle" role="status" aria-live="polite"></p>
+        </form>
+        <div class="prose">
+          <h3>Availability</h3>
+          <p>I’m available for freelance and full‑time roles. Based in India (IST).</p>
+          <h3>Elsewhere</h3>
+          <p><a class="btn" href="#">GitHub</a> <a class="btn" href="#">LinkedIn</a> <a class="btn" href="#">Resume</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      © <span id="year"></span> Indu Kurumutla — Built with ❤ and vanilla HTML/CSS/JS.
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const hamb = document.getElementById('hamb');
+    const mnav = document.getElementById('mnav');
+    hamb?.addEventListener('click', () => {
+      const open = mnav.classList.toggle('hidden');
+      const expanded = !open;
+      hamb.setAttribute('aria-expanded', expanded.toString());
+    });
+
+    // Theme toggle (light/dark)
+    const themeBtn = document.getElementById('theme');
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if(saved === 'light') root.classList.add('light');
+    themeBtn?.addEventListener('click', () => {
+      root.classList.toggle('light');
+      localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    // Simple client‑side form handler
+    const form = document.getElementById('form');
+    const statusEl = document.getElementById('status');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      // Fake async submit
+      statusEl.textContent = 'Sending…';
+      setTimeout(() => {
+        statusEl.textContent = `Thanks ${data.name}! I will reply to ${data.email} soon.`;
+        form.reset();
+      }, 600);
+    });
+
+    // Scroll reveal for cards
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.animate([
+            { opacity: 0, transform: 'translateY(12px)'},
+            { opacity: 1, transform: 'translateY(0)'}
+          ], { duration: 400, easing: 'ease-out', fill: 'forwards' });
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { threshold: 0.14 });
+    document.querySelectorAll('.card, .prose, .timeline .titem').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

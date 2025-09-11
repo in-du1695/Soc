@@ -7,13 +7,17 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #127962;
-            --accent: #ffb900;
-            --bg: #eef0f7;
-            --card-bg: #fff;
-            --text: #222;
-            --shadow: 0 4px 24px rgba(0,0,0,0.08);
-        }
+    --primary: #e73410;   /* deep vibrant orange-red */
+    --accent: #dd2476;    /* strong pink-magenta */
+    --bg: #fff4e6;        /* warm cream background */
+    --card-bg: #ffffff;   /* clean card white */
+    --text: #1a1a1a;      /* dark readable text */
+    --shadow: 0 6px 30px rgba(245, 155, 21, 0.918);
+}
+
+
+
+
         * {
             box-sizing: border-box;
         }
@@ -23,13 +27,20 @@
             background: var(--bg);
             color: var(--text);
         }
-        header {
-            background: var(--primary);
-            color: #f1f1f1;
-            padding: 2rem 0 1rem 0;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
+
+        /* Header */
+      header {
+    background: linear-gradient(135deg, #ff512f, #f09819, #dd2476); 
+    color: #fff;
+    padding: 2rem 0 1rem 0;
+    text-align: center;
+    box-shadow: var(--shadow);
+    animation: fadeDown 1s ease-out;
+}
+
+
+
+
         header h1 {
             margin: 0;
             font-size: 2.5rem;
@@ -44,18 +55,61 @@
             margin-top: 1rem;
         }
         nav a {
-            color: #e2dada;
+            color: #faf0f0;
             text-decoration: none;
             margin: 0 1rem;
             font-weight: 700;
+            position: relative;
+            display: inline-block;
             transition: color 0.2s;
+        }
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 6px;
+            background: var(--accent);
+            transition: width 0.3s ease-in-out;
         }
         nav a:hover {
             color: var(--accent);
         }
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Header Animations */
+        .animate-title {
+            opacity: 0;
+            animation: slideIn 1.2s ease forwards;
+        }
+        .animate-subtitle {
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #fff;
+            width: 0;
+            display: inline-block;
+            animation: typing 3s steps(30, end) forwards, blink 0.7s infinite step-end alternate;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Container */
         .container {
             max-width: 1100px;
-            margin: 2rem auto;
+            margin: 4rem auto;
             padding: 0 1rem;
         }
         .section-title {
@@ -65,6 +119,8 @@
             text-align: center;
             letter-spacing: 1px;
         }
+
+        /* Skills */
         .skills {
             display: flex;
             flex-wrap: wrap;
@@ -84,10 +140,13 @@
             transition: transform 0.2s;
         }
         .skill-card:hover {
-            transform: translateY(-5px) scale(1.05);
-            background: var(--accent);
-            color: #e2e2e2;
-        }
+    transform: translateY(-5px) scale(1.05);
+    background: linear-gradient(135deg, #ff512f, #dd2476);
+    color: #fff;
+}
+
+
+        /* About */
         .about {
             display: flex;
             flex-wrap: wrap;
@@ -112,14 +171,16 @@
             border-radius: 50%;
             width: 180px;
             height: 180px;
-            box-shadow: 0 2px 12px rgba(45,137,239,0.15);
+            box-shadow: 0 2px 12px rgba(45, 135, 239, 0.897);
         }
         .about-text {
             flex: 2 1 300px;
         }
+
+        /* Projects */
         .projects {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr); /* 2 per row */
             gap: 2rem;
             margin-bottom: 2rem;
         }
@@ -134,7 +195,7 @@
         }
         .project-card:hover {
             transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 8px 32px rgba(45,137,239,0.15);
+            box-shadow: 0 8px 32px rgba(247, 150, 23, 0.945);
         }
         .project-img {
             width: 100%;
@@ -169,6 +230,38 @@
         .project-link:hover {
             color: var(--primary);
         }
+
+        /* Contact */
+        form {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-bottom: 1rem;
+        }
+        form button {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.7rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        form button:hover {
+            background: #0e5d4c;
+        }
+
+        /* Footer */
         footer {
             background: var(--primary);
             color: #fff;
@@ -177,6 +270,13 @@
             margin-top: 2rem;
             font-size: 1rem;
             letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .projects {
+                grid-template-columns: 1fr; /* stack projects */
+            }
         }
         @media (max-width: 700px) {
             .about {
@@ -198,8 +298,8 @@
 </head>
 <body>
     <header>
-        <h1>Indumathi K</h1>
-        <p>Pursuing Artificial Intelligence</p>
+        <h1 class="animate-title">Indumathi K</h1>
+        <p class="animate-subtitle">Pursuing Artificial Intelligence</p>
         <nav>
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
@@ -231,9 +331,9 @@
                 <p>
                    Hi! I’m Indumathi K, a passionate learner and aspiring AI developer. Currently, I am pursuing my studies in Artificial Intelligence, where I focus on building intelligent systems that can solve real-world problems.
 
-I enjoy working on projects that combine web development, machine learning, and user-focused design, and I have hands-on experience with technologies like HTML, CSS, JavaScript, React, Node.js, MongoDB, and Git.
+                   I enjoy working on projects that combine web development, machine learning, and user-focused design, and I have hands-on experience with technologies like HTML, CSS, JavaScript, React, Node.js, MongoDB, and Git.
 
-Beyond coding, I’m deeply interested in how AI can be applied in healthcare and education, making technology more accessible and impactful. My goal is to grow as a full-stack developer with strong expertise in AI-driven solutions.
+                   Beyond coding, I’m deeply interested in how AI can be applied in healthcare and education, making technology more accessible and impactful. My goal is to grow as a full-stack developer with strong expertise in AI-driven solutions.
                 </p>
             </div>
         </section>
@@ -278,24 +378,24 @@ Beyond coding, I’m deeply interested in how AI can be applied in healthcare an
         <!-- Contact Section -->
         <section id="contact">
             <h2 class="section-title">Contact</h2>
-            <form style="background:var(--card-bg);box-shadow:var(--shadow);border-radius:8px;padding:2rem;max-width:500px;margin:0 auto;">
-                <div style="margin-bottom:1rem;">
-                    <input type="text" placeholder="Your Name" required style="width:100%;padding:0.7rem;border-radius:4px;border:1px solid #ddd;">
+            <form>
+                <div>
+                    <input type="text" placeholder="Your Name" required>
                 </div>
-                <div style="margin-bottom:1rem;">
-                    <input type="email" placeholder="Your Email" required style="width:100%;padding:0.7rem;border-radius:4px;border:1px solid #ddd;">
+                <div>
+                    <input type="email" placeholder="Your Email" required>
                 </div>
-                <div style="margin-bottom:1rem;">
-                    <textarea placeholder="Your Message" required style="width:100%;padding:0.7rem;border-radius:4px;border:1px solid #ddd;min-height:80px;"></textarea>
+                <div>
+                    <textarea placeholder="Your Message" required></textarea>
                 </div>
-                <button type="submit" style="background:var(--primary);color:#fff;padding:0.7rem 2rem;border:none;border-radius:4px;font-weight:700;cursor:pointer;transition:background 0.2s;">Send</button>
+                <button type="submit">Send</button>
             </form>
         </section>
     </div>
 
     <!-- Footer -->
     <footer>
-        &copy; 2024 Indumathi K. All rights reserved.
+        &copy; 2025 Indumathi K. All rights reserved.
     </footer>
 </body>
 </html>
