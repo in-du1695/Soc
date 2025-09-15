@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Bar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #list {
+      list-style-type: none;
+      padding: 0;
+      margin: 20px auto;
+      max-width: 300px;
+      text-align: left;
+    }
+
+    #list li {
+      background: #fff;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(211, 178, 196, 0.1);
+      transition: 0.3s;
+    }
+
+    #list li:hover {
+      background: #505355;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 8px 15px;
+      border: none;
+      background: #aba0db;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #0b7dda;
+    }
+
+    .complete {
+      margin-left: 10px;
+      background: #cca8c4;
+    }
+
+    .complete:hover {
+      background: #af486a;
+    }
+
+    #output {
+      margin-top: 20px;
+      font-style: italic;
+      color: #666;
+    }
+  </style>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1> MY TASK </h1>
+  <ol id="list">
+    <li>Task 1 <button class="complete">Complete task</button> <button class="delete">Delete</button></li>
+    <li>Task 2 <button class="complete">Complete task</button> <button class="delete">Delete</button></li>
+    <li>Task 3 <button class="complete">Complete task</button> <button class="delete">Delete</button></li>
+  </ol>
+
+  <input type="text" id="myInput" placeholder="Type something...">
+  <button id="add">Add Task</button>
+
+  <p id="output">This text will change as you type.</p>   
+
+  <script>
+    $(document).ready(function() {
+      // Add new task
+      $("#add").click(function() {
+        let task = $("#myInput").val();
+        if (task) {
+          $("#list").append('<li>' + task + ' <button class="complete">Complete Item</button> <button class="delete">Delete</button></li>');
+          $("#myInput").val("");
+        }
+      });
+
+      // Live typing preview
+      $("#myInput").on("input", function() {
+        $("#output").text($(this).val() || "This text will change as you type.");
+      });
+
+      // Mark task as complete
+      $("#list").on("click", ".complete", function() {
+        $(this).parent().css("background-color", "lightgreen");
+        $(this).prop("disabled", true); 
+      });
+      $("#list").on("click", ".delete", function() {
+        $(this).parent().remove();
+      });
+    });
+  </script>
+</body>
+</html>
