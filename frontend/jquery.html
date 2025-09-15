@@ -1,0 +1,123 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://official-joke-api.appspot.com/random_joke"></script>
+    <meta charset="UTF-8">
+    <title>Query example</title>
+</head>
+<body>
+    <h1>Hello Gai</h1>
+    <h2>hello my priend</h2>
+    <button id="btn">Click me</button>
+    <div class="temp">
+        <p> hello my heart, my lovely friend 
+            cinnamon girl, my love, my life, my every thing
+        </p>
+    </div>
+    <input type="text" id="myinput">
+    <p id="output">my friend</p>
+    <ol id="list">
+        <li>item</li>
+    </ol>
+    <button id="addbtn">Add</button>
+    <button id="pre-end">prepend</button>
+    <button id="remove">remove</button>
+
+    <script>
+
+        $(document).ready(function(){
+            $("btn").click(function(){
+                $("h1").text("you entered in my heart");
+                $("h2").text("love you");
+                $(temp).css("background-color","aqua");
+                $(p).css("font-family","cursive");
+
+            });
+            $(#add).click(function){
+                var val=$("#myinput").val();
+                $("#list").append("<li>"+val+"</li>");
+            }
+            $("#pre-end").click(function(){
+                var val=$("#myinput").val();
+                $("#list").prepend("<li>"+val+"</li>");
+            })
+            $("#remove").click(function(){
+                $("#list li:last-child").remove();
+            })
+
+
+        })
+    </script>
+    <section>
+        <h2>Jquery Example</h2>
+        <input type="text" id="input" placeholder="click here">
+        <button id="btnj">Click Me</button>
+    </section>
+    <script>
+        $(document).ready(function(){
+            $("#btnj").click(function(){
+                $("h2").text("Button Clicked");
+            
+            })
+        })
+    </script>
+
+ <section>
+    <h1> Joke</h1>
+    <input type="text" id="input" placeholder="click here for joke">
+    <button id="btn">Click here</button>
+ </section>
+ <script>
+    $(document).ready(function(){
+        $("#btn").click(function(){
+            $("h1").text("joke for you");
+        })
+    })
+ </script>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tasks</title>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    
+    <h1>To do list</h1>
+    <br>
+    <h2>My Tasks</h2>
+    <ol id="list">
+        <li>Python</li>
+        <li>JavaScript</li>
+        <li>HTML</li>
+    </ol>
+    <input type="text" id="input" placeholder="Add tasks">
+    <button id="btn">Add tasks</button>
+    <p id="output">My tasks</p>
+<script>
+    $(document).ready(function(){
+        $("#add").click(function(){
+            let task = $("#myInput").val();
+            if(task) {
+                $("#list").append("<li"> + task + "</li>");
+                $("#myInput").val("");
+            }
+             
+        });
+        $("#myInput").on("input". function(){
+            let task = $("#myInput").val();
+            $("#output").text(task);
+        });
+    
+    });
+</script>
+</body>
+</html> -->
+
+
+
+
